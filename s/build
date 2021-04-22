@@ -1,0 +1,9 @@
+#!/bin/sh
+set -ex
+
+main() {
+  ./node_modules/.bin/tsc --build tsconfig.json --clean
+  ./node_modules/.bin/tsc --build tsconfig.json
+}
+
+main "$@"

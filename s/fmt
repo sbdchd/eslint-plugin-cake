@@ -1,0 +1,8 @@
+#!/bin/sh
+set -ex
+
+main() {
+  ./node_modules/.bin/prettier --write '**/*.{js,ts,md,yml,json}'
+}
+
+main "$@"

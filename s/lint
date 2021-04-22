@@ -1,0 +1,16 @@
+#!/bin/sh
+set -ex
+
+main() {
+  if [ "$CI" ]; then
+    ./node_modules/.bin/eslint '**/*.ts'
+    ./node_modules/.bin/prettier --check '**/*.{js,ts,md,yml,json}'
+  else
+    ./node_modules/.bin/eslint '**/*.ts' --fix
+    ./node_modules/.bin/prettier --write '**/*.{js,ts,md,yml,json}'
+  fi
+
+  ./node_modules/.bin/tsc --noEmit
+}
+
+main "$@"
