@@ -1,6 +1,6 @@
 # Disallow unnecessary fragments (react/jsx-no-useless-fragment)
 
-A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a [keyed fragment](https://reactjs.org/docs/fragments.html#keyed-fragments).
+A fragment is redundant if it contains only one child that's not an expression or if it's a child of a html element, and is not a [keyed fragment](https://reactjs.org/docs/fragments.html#keyed-fragments).
 
 **Fixable:** This rule is sometimes automatically fixable using the `--fix` flag on the command line.
 
@@ -9,13 +9,9 @@ A fragment is redundant if it contains only one child, or if it is the child of 
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<>{foo}</>
-
 <><Foo /></>
 
 <p><>foo</></p>
-
-<></>
 
 <Fragment>foo</Fragment>
 
@@ -32,6 +28,10 @@ Examples of **incorrect** code for this rule:
 Examples of **correct** code for this rule:
 
 ```jsx
+<>{foo}</>
+
+<></>
+
 <>
   <Foo />
   <Bar />
@@ -41,7 +41,7 @@ Examples of **correct** code for this rule:
 
 <> {foo}</>
 
-const cat = <>meow</>
+const bar = <>foo</>
 
 <SomeComponent>
   <>
@@ -59,21 +59,4 @@ const cat = <>meow</>
 ...
 "react/jsx-no-useless-fragment": [<enabled>]
 ...
-```
-
-### `ignoreUnsafeChildren` (default: `false`)
-
-When `true` the rule will ignore errors related to fragments having enough
-children when removing the fragment could result in a runtime error.
-
-Examples of **correct** code for this rule:
-
-```jsx
-<></>
-
-<>{children}</>
-
-<>{foo && <Foo/>}</>
-
-<>{foo?.map(x => <Bar x={x}/>)}</>
 ```
