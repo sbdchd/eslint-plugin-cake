@@ -39,3 +39,16 @@ Add `cake` to the plugins section of your `.eslintrc` configuration file. You ca
 ## Supported Rules
 
 [see docs](./docs/rules)
+
+
+## Dev
+
+```shell
+yarn install
+
+s/lint
+s/test
+
+# release new version
+yarn publish
+```
