@@ -49,5 +49,10 @@ s/lint
 s/test
 
 # release new version
+s/build
+
+# optional, if you want to test locally:
+yarn pack
+
 yarn publish
 ```

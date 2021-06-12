@@ -1,4 +1,4 @@
-# Disallow unnecessary fragments (react/jsx-no-useless-fragment)
+# Disallow unnecessary fragments (cake/jsx-no-useless-fragment)
 
 A fragment is redundant if it contains only one child that's not an expression or if it's a child of a html element, and is not a [keyed fragment](https://reactjs.org/docs/fragments.html#keyed-fragments).
 
@@ -57,6 +57,6 @@ const bar = <>foo</>
 
 ```js
 ...
-"react/jsx-no-useless-fragment": [<enabled>]
+"cake/jsx-no-useless-fragment": [<enabled>]
 ...
 ```

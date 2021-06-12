@@ -72,7 +72,6 @@ export default util.createRule<[], MessageIds>({
   name: "jsx-no-useless-style-classname",
   meta: {
     type: "suggestion",
-    fixable: "code",
     docs: {
       description: "Disallow unnecessary style and className props.",
       category: "Best Practices",
