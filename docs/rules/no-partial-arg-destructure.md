@@ -1,4 +1,4 @@
-# Disallow missing destructure params (cake/jsx-no-useless-fragment)
+# Disallow missing destructure params (cake/no-partial-arg-destructure)
 
 When a component's props type has more fields than are used in the component,
 the users of the component end up needing to pass in the unused params, which is non-ideal. Also this can hide dead code.
@@ -31,6 +31,6 @@ function Foo(props: Params) {}
 
 ```js
 ...
-"cake/jsx-no-useless-style-classname": [<enabled>]
+"cake/no-partial-arg-destructure": [<enabled>]
 ...
 ```
