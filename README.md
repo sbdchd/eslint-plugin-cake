@@ -6,7 +6,7 @@ misc rules for eslint
 
 > **NOTE**: This is forked from
 > [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react) so
-> that I have [a safer](https://github.com/yannickcr/eslint-plugin-react/pull/2967) `jsx-no-useless-fragment` rule.
+> that I can have [a safer](https://github.com/yannickcr/eslint-plugin-react/pull/2967) `jsx-no-useless-fragment` rule.
 
 ## Installation
 
