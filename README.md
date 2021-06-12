@@ -40,7 +40,6 @@ Add `cake` to the plugins section of your `.eslintrc` configuration file. You ca
 
 [see docs](./docs/rules)
 
-
 ## Dev
 
 ```shell
