@@ -27,9 +27,11 @@
   "types": "dist/index.d.ts",
   "scripts": {},
   "dependencies": {
+    "@types/lodash": "^4.14.170",
     "@typescript-eslint/experimental-utils": "^4.22.0",
     "fp-ts": "^2.10.4",
-    "io-ts": "^2.2.16"
+    "io-ts": "^2.2.16",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^26.0.22",

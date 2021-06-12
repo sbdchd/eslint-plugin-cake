@@ -79,7 +79,12 @@ function Foo({buzz, bar}: Params) {}`,
        bar: number
      }
      function Foo({buzz}: Params) {}`,
-      errors: [{ messageId: "PartialArgDestructure" }],
+      errors: [
+        {
+          messageId: "PartialArgDestructure",
+          data: { unusedFields: ["bar"] },
+        },
+      ],
     },
     {
       // shouldn't matter if we use an interface or type
@@ -89,7 +94,12 @@ function Foo({buzz, bar}: Params) {}`,
        bar: number
      }
      function Foo({buzz}: Params) {}`,
-      errors: [{ messageId: "PartialArgDestructure" }],
+      errors: [
+        {
+          messageId: "PartialArgDestructure",
+          data: { unusedFields: ["bar"] },
+        },
+      ],
     },
     {
       // should also check arrow functions
@@ -99,7 +109,12 @@ function Foo({buzz, bar}: Params) {}`,
        bar: number
      }
      const Foo = ({buzz}: Params) => {}`,
-      errors: [{ messageId: "PartialArgDestructure" }],
+      errors: [
+        {
+          messageId: "PartialArgDestructure",
+          data: { unusedFields: ["bar"] },
+        },
+      ],
     },
   ],
 })

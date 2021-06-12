@@ -1,17 +1,31 @@
 import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/experimental-utils"
 import { RuleContext } from "@typescript-eslint/experimental-utils/dist/ts-eslint/Rule"
+import { difference } from "lodash"
 import * as util from "../utils"
 
-function missingFieldsInType(
+function getUnusedFields(
   node: TSESTree.ObjectPattern,
   context: Readonly<RuleContext<MessageIds, []>>
-): boolean {
+) {
   const parserServices = util.getParserServices(context)
   const typeChecker = parserServices.program.getTypeChecker()
   const objectType = typeChecker.getTypeAtLocation(
     parserServices.esTreeNodeToTSNodeMap.get(node)
   )
-  return node.properties.length < objectType.getProperties().length
+
+  const typeProperties = objectType.getProperties().map((x) => x.name)
+
+  const paramProperties: string[] = []
+  for (const prop of node.properties) {
+    if (
+      prop.type === AST_NODE_TYPES.Property &&
+      prop.key.type === AST_NODE_TYPES.Identifier
+    ) {
+      paramProperties.push(prop.key.name)
+    }
+  }
+
+  return difference(typeProperties, paramProperties)
 }
 
 function checkNode(
@@ -25,9 +39,13 @@ function checkNode(
       (param) => param.type !== AST_NODE_TYPES.RestElement
     )
   ) {
-    if (missingFieldsInType(node.params[0], context))
+    const unusedFields = getUnusedFields(node.params[0], context)
+    if (unusedFields.length > 0)
       context.report({
-        node,
+        node: node.params[0],
+        data: {
+          unusedFields,
+        },
         messageId: "PartialArgDestructure",
       })
   }
@@ -39,7 +57,6 @@ export default util.createRule<[], MessageIds>({
   name: "no-partial-arg-destructure",
   meta: {
     type: "suggestion",
-    fixable: "code",
     docs: {
       description: "Usused params can hide dead code.",
       category: "Best Practices",
@@ -47,7 +64,7 @@ export default util.createRule<[], MessageIds>({
     },
     messages: {
       PartialArgDestructure:
-        "All params must be destructured, consider removing the unused fields from the param type.",
+        "Remove the unused fields in param type: '{{ unusedFields }}'.",
     },
     schema: [],
   },
