@@ -1,4 +1,4 @@
-# Disallow unnecessary style and className props (cake/jsx-no-useless-fragment)
+# Disallow unnecessary style and className props (cake/jsx-no-useless-style-classname)
 
 A style and className passed to a builtin JSX element is a no-op that can be removed.
 
