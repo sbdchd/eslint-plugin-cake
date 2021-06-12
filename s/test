@@ -2,7 +2,7 @@
 set -ex
 
 main() {
-  ./node_modules/.bin/jest
+  ./node_modules/.bin/jest "${@}"
 }
 
 main "$@"
