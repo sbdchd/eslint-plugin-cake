@@ -43,6 +43,14 @@ function Foo({buzz, bar}: Params) {}`,
        buzz: string
        bar: number
      }
+     const Foo = ({buzz}: Pick<Params, "buzz">) => {}`,
+    },
+    {
+      code: `
+     type Params = {
+       buzz: string
+       bar: number
+     }
      function Foo(props: Params) {}`,
     },
 
