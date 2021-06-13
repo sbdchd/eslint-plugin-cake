@@ -4,9 +4,11 @@ misc rules for eslint
 
 ## Why?
 
-> **NOTE**: This is forked from
-> [`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react) so
-> that I can have [a safer](https://github.com/yannickcr/eslint-plugin-react/pull/2967) `jsx-no-useless-fragment` rule.
+Originally to have a forked version of
+[`eslint-plugin-react`](https://github.com/yannickcr/eslint-plugin-react)'s
+`jsx-no-useless-fragment` that is
+[safe](https://github.com/yannickcr/eslint-plugin-react/pull/2967). Now this
+repo is a collection of miscellaneous lints I couldn't find elsewhere.
 
 ## Installation
 
