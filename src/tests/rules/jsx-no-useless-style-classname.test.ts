@@ -41,23 +41,28 @@ ruleTester.run("jsx-no-useless-style-classname", rule, {
   ],
   invalid: [
     {
-      code: "<section style={{}} />",
+      code: `<section foo="bar" style={{}} buzz={true} />`,
+      output: `<section foo="bar"  buzz={true} />`,
       errors: [{ messageId: "EmptyStyleProp" }],
     },
     {
-      code: "<section className={''} />",
+      code: `<section foo="bar" className={''} buzz={true} />`,
+      output: `<section foo="bar"  buzz={true} />`,
       errors: [{ messageId: "EmptyClassNameProp" }],
     },
     {
       code: `<section className="" />`,
+      output: `<section  />`,
       errors: [{ messageId: "EmptyClassNameProp" }],
     },
     {
       code: "<section className={``} />",
+      output: `<section  />`,
       errors: [{ messageId: "EmptyClassNameProp" }],
     },
     {
       code: `<section style={{}} className="" />`,
+      output: `<section   />`,
       errors: [
         { messageId: "EmptyStyleProp" },
         { messageId: "EmptyClassNameProp" },
