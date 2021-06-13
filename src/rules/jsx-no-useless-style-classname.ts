@@ -6,18 +6,15 @@ function isBuiltinElement(node: TSESTree.JSXOpeningElement): boolean {
   return node.name.type === "JSXIdentifier" && /^[a-z]+$/.test(node.name.name)
 }
 
-function hasEmptyStyleProp(node: TSESTree.JSXOpeningElement): boolean {
-  return (
-    node.attributes.length > 0 &&
-    node.attributes.some(
-      (x) =>
-        x.type === AST_NODE_TYPES.JSXAttribute &&
-        typeof x.name.name === "string" &&
-        x.name.name === "style" &&
-        x.value?.type === AST_NODE_TYPES.JSXExpressionContainer &&
-        x.value.expression.type === AST_NODE_TYPES.ObjectExpression &&
-        x.value.expression.properties.length === 0
-    )
+function getEmptyStyleProp(node: TSESTree.JSXOpeningElement) {
+  return node.attributes.find(
+    (x) =>
+      x.type === AST_NODE_TYPES.JSXAttribute &&
+      typeof x.name.name === "string" &&
+      x.name.name === "style" &&
+      x.value?.type === AST_NODE_TYPES.JSXExpressionContainer &&
+      x.value.expression.type === AST_NODE_TYPES.ObjectExpression &&
+      x.value.expression.properties.length === 0
   )
 }
 
@@ -33,35 +30,37 @@ function isEmptyStringExpr(
   )
 }
 
-function hasEmptyClassNameProp(node: TSESTree.JSXOpeningElement): boolean {
-  return (
-    node.attributes.length > 0 &&
-    node.attributes.some(
-      (x) =>
-        x.type === AST_NODE_TYPES.JSXAttribute &&
-        typeof x.name.name === "string" &&
-        x.name.name === "className" &&
-        ((x.value?.type === AST_NODE_TYPES.Literal && x.value.value === "") ||
-          (x.value?.type === AST_NODE_TYPES.JSXExpressionContainer &&
-            isEmptyStringExpr(x.value.expression)))
-    )
+function getEmptyClassNameProp(node: TSESTree.JSXOpeningElement) {
+  return node.attributes.find(
+    (x) =>
+      x.type === AST_NODE_TYPES.JSXAttribute &&
+      typeof x.name.name === "string" &&
+      x.name.name === "className" &&
+      ((x.value?.type === AST_NODE_TYPES.Literal && x.value.value === "") ||
+        (x.value?.type === AST_NODE_TYPES.JSXExpressionContainer &&
+          isEmptyStringExpr(x.value.expression)))
   )
 }
+
 function checkNode(
   node: TSESTree.JSXOpeningElement,
   context: Readonly<RuleContext<MessageIds, []>>
 ): void {
-  if (hasEmptyStyleProp(node)) {
+  const emptyStyleProp = getEmptyStyleProp(node)
+  if (emptyStyleProp != null) {
     context.report({
       node,
       messageId: "EmptyStyleProp",
+      fix: (fixer) => fixer.remove(emptyStyleProp),
     })
   }
 
-  if (hasEmptyClassNameProp(node)) {
+  const emptyClassNameProp = getEmptyClassNameProp(node)
+  if (emptyClassNameProp != null) {
     context.report({
       node,
       messageId: "EmptyClassNameProp",
+      fix: (fixer) => fixer.remove(emptyClassNameProp),
     })
   }
 }
@@ -72,6 +71,7 @@ export default util.createRule<[], MessageIds>({
   name: "jsx-no-useless-style-classname",
   meta: {
     type: "suggestion",
+    fixable: "code",
     docs: {
       description: "Disallow unnecessary style and className props.",
       category: "Best Practices",
