@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-cake",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "ESLint plugin with misc rules.",
   "keywords": [
     "eslint",
