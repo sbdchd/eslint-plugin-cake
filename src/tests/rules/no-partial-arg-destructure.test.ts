@@ -70,6 +70,24 @@ function Foo({buzz, bar}: Params) {}`,
      }
      const Foo = (props: Params) => {}`,
     },
+    {
+      // Basically allow the react-router `withRouter` HOC to work
+      // see: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/e8adb15343a83fdd6f117bcd77783233e9210c21/types/react-router/index.d.ts#L180-L182
+      code: `
+interface RouteComponentProps {
+  history: unknown
+  location: unknown
+  match: unknown
+  staticContext?: unknown
+}
+
+interface FooProps extends RouteComponentProps {
+    title: string
+}
+
+function Foo({title}: FooProps) {}
+`,
+    },
   ],
   invalid: [
     {
