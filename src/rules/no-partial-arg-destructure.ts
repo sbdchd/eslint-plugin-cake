@@ -3,6 +3,13 @@ import { RuleContext } from "@typescript-eslint/experimental-utils/dist/ts-eslin
 import { difference } from "lodash"
 import * as util from "../utils"
 
+const ALLOWED_UNUSED_PROPERTIES = new Set([
+  "history",
+  "location",
+  "match",
+  "staticContext",
+])
+
 function getUnusedFields(
   node: TSESTree.ObjectPattern,
   context: Readonly<RuleContext<MessageIds, []>>
@@ -13,7 +20,10 @@ function getUnusedFields(
     parserServices.esTreeNodeToTSNodeMap.get(node)
   )
 
-  const typeProperties = objectType.getProperties().map((x) => x.name)
+  const typeProperties = objectType
+    .getProperties()
+    .map((x) => x.name)
+    .filter((x) => !ALLOWED_UNUSED_PROPERTIES.has(x))
 
   const paramProperties: string[] = []
   for (const prop of node.properties) {
